@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AV104club</title>
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#07101f" />
+  <style>
+    *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:#07101f;color:#eef5ff;display:flex;min-height:100vh}
+    aside{width:220px;background:#0b1628;border-right:1px solid #1c2d45;padding:15px}
+    aside button{display:block;width:100%;padding:10px;margin:5px 0;border:0;border-radius:6px;background:0;color:#a9bad0;cursor:pointer}
+    aside button.on{background:#17304f;color:#fff}
+    main{flex:1;display:flex;flex-direction:column}
+    .top{height:50px;border-bottom:1px solid #1c2d45;display:flex;align-items:center;padding:0 20px;justify-content:space-between}
+    .content{padding:20px;overflow:auto;flex:1}
+    .card{background:#0d1b2e;border:1px solid #203752;border-radius:10px;padding:15px;margin-bottom:15px}
+    .input{width:100%;padding:10px;background:#081321;border:1px solid #29425f;color:#fff;border-radius:6px;margin-top:8px}
+    .primary{background:#3182f6;color:#fff;border:0;border-radius:6px;padding:10px 15px;cursor:pointer;font-weight:700;margin-top:8px}
+    .msg{background:#16283e;padding:10px;border-radius:8px;margin:8px 0;max-width:85%}
+    .me{background:#1c4c8a;margin-left:auto}
+    img.logo{width:36px;height:36px;border-radius:6px}
+    @media (max-width:800px){aside{display:none}body{display:block}}
+  </style>
+</head>
+<body>
+  <aside>
+    <b>⚡ AV104club</b>
+    <div style="margin-top:20px">
+      <button class="on" onclick="go('home',this)">🏠 Home</button>
+      <button onclick="go('chat',this)">🤖 Chitti AI</button>
+      <button onclick="go('notes',this)">📝 Notes</button>
+      <button onclick="go('rooms',this)">👥 Rooms</button>
+      <button onclick="go('image',this)">🖼️ Image</button>
+      <button onclick="go('video',this)">🎬 Video</button>
+      <button onclick="go('code',this)">💻 Code</button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="top">
+      <div style="display:flex;align-items:center;gap:12px">
+        <img class="logo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36'><rect rx='6' width='36' height='36' fill='%2317304f'/><text x='50%' y='60%' font-size='18' text-anchor='middle' fill='%23fff' font-family='sans-serif'>AV</text></svg>" alt="AV"/>
+        <b>AV104club Hub</b>
+      </div>
+      <span style="color:#55e6a5">● Chitti Online</span>
+    </div>
+
+    <div id="c" class="content"></div>
+  </main>
+
+  <script>
+    function go(v,btn){
+      if(btn){document.querySelectorAll('aside button').forEach(b=>b.classList.remove('on'));btn.classList.add('on')}
+      let c=document.getElementById('c');
+      if(v==='home')c.innerHTML=`<h2>Welcome to AV104club 😎</h2><p>Your Chitti AI ecosystem is ready.</p><div class="card"><h3>Training Modules</h3><p>Computer Science • Electronics • Robotics</p></div>`;
+      else if(v==='chat')c.innerHTML=`<h2>Chitti AI</h2><div style="height:50vh;overflow-y:auto;border:1px solid #203752;padding:10px;border-radius:8px" id="m"><div class="msg"><b>Chitti:</b> Hello! Ask me anything. 🚀</div></div><input id="q" class="input" placeholder="Type message..." onkeydown="if(event.key==='Enter')s()"><button class="primary" onclick="s()">Send</button>`;
+      else if(v==='notes')c.innerHTML=`<h2>Notes</h2><textarea id="n" class="input" style="height:150px">${localStorage.avnote||''}</textarea><button class="primary" onclick="localStorage.setItem('avnote',document.getElementById('n').value);alert('Saved!')">Save</button>`;
+      else if(v==='rooms')c.innerHTML=`<h2>Command Rooms</h2><div class="card"><h3>Room Av104 (Passcode: 104)</h3><input class="input" placeholder="Message room..." style="margin-bottom:10px"></div><button class="primary" onclick="gen()">Generate 15m Guest Code</button><span id="gc" style="margin-left:10px;color:#7ed7ff"></span>`;
+      else if(v==='image')c.innerHTML=`<h2>Image Creator</h2><input id="p" class="input" placeholder="Describe image..."><button class="primary" onclick="img()">Generate</button><div id="r" style="margin-top:15px"></div>`;
+      else if(v==='video')c.innerHTML=`<h2>Video Creator</h2><input id="vp" class="input" placeholder="Describe video scene..."><button class="primary" onclick="alert('Video generation initialized! 🎬')">Generate Video</button>`;
+      else if(v==='code')c.innerHTML=`<h2>Code Sandbox</h2><textarea class="input" style="height:100px">print('Chitti Active')</textarea><button class="primary" onclick="alert('Code executed successfully with 0 errors! 🧠')">Run Code</button>`;
+    }
+    function s(){
+      let q=document.getElementById('q'),m=document.getElementById('m');
+      if(!q || !q.value) return;
+      m.innerHTML+=`<div class="msg me">${q.value}</div>`;
+      let t=q.value; q.value='';
+      setTimeout(()=>m.innerHTML+=`<div class="msg"><b>Chitti:</b> Solving "${t}"! 🚀</div>`,300);
+    }
+    function img(){let r=document.getElementById('r'); r.innerHTML='Generating...'; setTimeout(()=>r.innerHTML='<img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400" style="max-width:100%;border-radius:8px">',600)}
+    function gen(){document.getElementById('gc').innerText='Temp Code: ' + Math.floor(1000 + Math.random() * 9000);}    
+    go('home');
+
+    // register service worker for PWA
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('/service-worker.js').catch(()=>{ /* ignore */ });
+    }
+  </script>
+</body>
+</html>

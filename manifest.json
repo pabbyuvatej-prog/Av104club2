@@ -1,0 +1,15 @@
+{
+  "name": "AV104club",
+  "short_name": "AV104",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#07101f",
+  "theme_color": "#07101f",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192'><rect rx='24' width='192' height='192' fill='%2317304f'/><text x='50%' y='60%' font-size='64' text-anchor='middle' fill='white' font-family='sans-serif'>AV</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}
